@@ -1,6 +1,7 @@
 import java.awt.*;
+import java.util.HashMap;
 
-public abstract class Car {
+public abstract class Car implements Moveable {
     // public final static double trimFactor = 1.25;  den här finns bara på volvo
     // public boolean turboOn; den här finns bara på saab
 
@@ -10,14 +11,18 @@ public abstract class Car {
     private Color color; // Color of the car
     private String modelName;
 
+    private HashMap<String, Double> dictionary = new HashMap<>();
+    private Point direction = new Point(0,1);
+
     public  Car(int nrDoors, double enginePower, double currentSpeed, Color color, String modelname){
         this.nrDoors = nrDoors; // uses this to refer to instance
         this.enginePower = enginePower;
         this.currentSpeed = currentSpeed;
         this.color = color;
         this.modelName = modelname;
-        
 
+        dictionary.put("x", 0.0);
+        dictionary.put("y", 0.0);
     }
 
     public int getNrDoors(){
@@ -28,7 +33,13 @@ public abstract class Car {
     }
 
     public double getCurrentSpeed(){
-        return currentSpeed;
+        double returnSpeed = currentSpeed;
+        if (returnSpeed > enginePower) {
+            returnSpeed = enginePower;
+        } else if (returnSpeed < 0) {
+            returnSpeed = 0;
+        }
+        return returnSpeed;
     }
 
     public Color getColor(){
@@ -51,14 +62,84 @@ public abstract class Car {
 	    currentSpeed = 0;
     }
     
-    protected abstract double speedFactor(); // is abstract so that it can be defined by sub classes this is because Volvo and saab have differernt speedfactors
+    protected abstract double speedFactor();
 
-    protected void incrementSpeed(double amount){
-	    currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount,enginePower);
+    public void incrementSpeed(double amount){
+        currentSpeed = getCurrentSpeed() + speedFactor() * amount;
     }
 
-    protected void decrementSpeed(double amount){
-        currentSpeed = Math.max(getCurrentSpeed() - speedFactor() * amount,0);
+    public void decrementSpeed(double amount){
+        currentSpeed = getCurrentSpeed() - speedFactor() * amount;
+    }
+    
+    
+    public void gas(double amount){
+        if (amount > 0 && amount < 1) {
+            incrementSpeed(amount);
+        }
+    }
+
+
+    public void brake(double amount){
+        if (amount > 0 && amount < 1) {
+            decrementSpeed(amount);
+        }
+       
+    }
+
+    @Override
+    public void move() {
+        double speed = getCurrentSpeed();
+        double x = speed * direction.x;
+        double y = speed * direction.y;
+        dictionary.put("y", dictionary.get("x") + x);
+        dictionary.put("y", dictionary.get("y") + y);
+    }
+
+    @Override
+    public void turnLeft() {
+        switch (direction.y) {
+            case 1:
+                direction = new Point(-1,0);
+    
+            case 0:
+                if (direction.x == -1) {
+                     direction = new Point(0,-1);
+                    
+                } else if (direction.x == 1) {
+                    direction = new Point(0,1);
+                }
+            case -1:
+                direction = new Point(1,0);
+                
+             default:
+                break;
+
+        }
+    
+        
+    }
+
+    @Override
+    public void turnRight() {
+        switch (direction.y) {
+            case 1:
+                direction = new Point(1,0);
+    
+            case 0:
+                if (direction.x == -1) {
+                     direction = new Point(0,1);
+                    
+                } else if (direction.x == 1) {
+                    direction = new Point(0,-1);
+                }
+            case -1:
+                direction = new Point(-1,0);
+                
+             default:
+                break;
+
+        }
     }
     
 }    
