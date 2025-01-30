@@ -1,3 +1,5 @@
+package org.example;
+
 import java.awt.*;
 
 public class Saab95 extends Car {
@@ -8,15 +10,8 @@ public class Saab95 extends Car {
     public Saab95(){
         super(4,0.5,10,Color.PINK,"Saab95");
     }
-    
-    /*public String getdirection(){
-        return this.direction;
-    }
 
-    public void setDirection(String newDirection){
-        this.direction = newDirection;
-    }*/
-   
+
     @Override
     public double speedFactor(){
         if(turboOn) this.turbo = 1.3;
