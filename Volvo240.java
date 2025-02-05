@@ -1,4 +1,4 @@
-package org.example;
+
 
 import java.awt.*;
 
@@ -6,6 +6,7 @@ public class Volvo240 extends Car {
 
     private final static double trimFactor = 1.25;
     
+
     public Volvo240(){
         super(4, 0.5, 10, Color.MAGENTA, "Volvo240");
     }
