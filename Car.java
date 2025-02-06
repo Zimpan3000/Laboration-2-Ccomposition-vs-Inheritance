@@ -7,27 +7,34 @@ public abstract class Car implements Moveable {
 
     private int nrDoors; // Number of doors on the car, these are private so that they can be accesed via getters and setters in the sub classes
     private double enginePower; // Engine power of the car
-    private double currentSpeed; // The current speed of the car
+    public double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     private String modelName;
+    private int widthOfCar;
 
     private HashMap<String, Double> dictionary = new HashMap<>();
     private Point direction = new Point(0,1);
 
-    public  Car(int nrDoors, double enginePower, double currentSpeed, Color color, String modelname){
+    public  Car(int nrDoors, double enginePower, double currentSpeed, Color color, String modelname, int widthOfCar){
         this.nrDoors = nrDoors; // uses this to refer to instance
         this.enginePower = enginePower;
         this.currentSpeed = currentSpeed;
         this.color = color;
         this.modelName = modelname;
+        this.widthOfCar = widthOfCar;
 
         dictionary.put("x", 0.0);
         dictionary.put("y", 0.0);
     }
 
+    public int getwidthOfCar(){
+        return widthOfCar;
+    }
+
     public int getNrDoors(){
         return nrDoors; 
     }
+    
     public double getEnginePower(){
         return enginePower;
     }
@@ -55,7 +62,16 @@ public abstract class Car implements Moveable {
     }
 
     public void startEngine(){
+        if( this instanceof flakfunktionalitet){
+            flakfunktionalitet truck = (flakfunktionalitet) this;
+            if (truck.getangle()== 0){
+                currentSpeed = 0.1;
+            }
+        
+        }
+        else{
 	    currentSpeed = 0.1;
+        }
     }
 
     public void stopEngine(){
@@ -73,18 +89,31 @@ public abstract class Car implements Moveable {
     }
     
     
-    public void gas(double amount){
+    public void gas(double amount) {
         if (amount > 0 && amount < 1) {
-            incrementSpeed(amount);
+            if (this instanceof flakfunktionalitet) { // kollar om det finns ett flak
+                flakfunktionalitet truck = (flakfunktionalitet) this;
+                if (truck.getangle() == 0) {
+                    incrementSpeed(amount);
+                }
+            } else {
+                incrementSpeed(amount);
+            }
         }
     }
 
 
-    public void brake(double amount){
+    public void brake(double amount) {
         if (amount > 0 && amount < 1) {
-            decrementSpeed(amount);
+            if (this instanceof flakfunktionalitet) { 
+                flakfunktionalitet scania = (flakfunktionalitet) this;
+                if (scania.getangle() == 0) {
+                    decrementSpeed(amount);
+                }
+            } else {
+                decrementSpeed(amount);
+            }
         }
-       
     }
 
     @Override
