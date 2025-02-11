@@ -91,14 +91,7 @@ public abstract class Car implements Moveable {
     
     public void gas(double amount) {
         if (amount > 0 && amount < 1) {
-            if (this instanceof flakfunktionalitet) { // kollar om det finns ett flak
-                flakfunktionalitet truck = (flakfunktionalitet) this;
-                if (truck.getangle() == 0) {
-                    incrementSpeed(amount);
-                }
-            } else {
-                incrementSpeed(amount);
-            }
+         incrementSpeed(amount);
         }
     }
 
@@ -123,6 +116,7 @@ public abstract class Car implements Moveable {
         double y = speed * direction.y;
         dictionary.put("y", dictionary.get("x") + x);
         dictionary.put("y", dictionary.get("y") + y);
+
     }
 
     @Override
@@ -145,8 +139,6 @@ public abstract class Car implements Moveable {
                 break;
 
         }
-    
-        
     }
 
     @Override
@@ -170,6 +162,23 @@ public abstract class Car implements Moveable {
 
         }
     }
+
+    public Double getPositionX () {
+        return dictionary.get("x");
+    }
+
+    public Double getPositionY () {
+        return dictionary.get("y");
+    }
+
+     public void addPositionX (Double x) {
+        dictionary.put("x", x);
+    }
+    
+    public void addPositionY (Double y) {
+        dictionary.put("y", y);
+    }
+    
     
 }    
 

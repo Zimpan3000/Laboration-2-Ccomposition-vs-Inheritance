@@ -33,6 +33,16 @@ public class scania extends Car implements flakfunktionalitet {
         return angle;
     }
 
+    @Override
+    public void gas(double amount) {
+        if (amount > 0 && amount < 1) {
+                if (getangle()== 0) {
+                    incrementSpeed(amount);
+                }
+            
+        }
+    }
+
     public int getmaxangle(){
         return maxangle;
     }
