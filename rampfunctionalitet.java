@@ -1,4 +1,5 @@
-public interface rampfunctionalitet {
-    void changerampstatus(boolean status);
+package org.example;
+public interface RampFunctionality {
+    void changeRampIsDown(boolean status);
     
 }
