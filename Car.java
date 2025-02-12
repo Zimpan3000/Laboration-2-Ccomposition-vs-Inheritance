@@ -1,3 +1,4 @@
+package org.example;
 import java.awt.*;
 import java.util.HashMap;
 
@@ -5,12 +6,12 @@ public abstract class Car implements Moveable {
     // public final static double trimFactor = 1.25;  den här finns bara på volvo
     // public boolean turboOn; den här finns bara på saab
 
-    private int nrDoors; // Number of doors on the car, these are private so that they can be accesed via getters and setters in the sub classes
-    private double enginePower; // Engine power of the car
+    private final int nrDoors; // Number of doors on the car, these are private so that they can be accesed via getters and setters in the sub classes
+    private final double enginePower; // Engine power of the car
     public double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
-    private String modelName;
-    private int widthOfCar;
+    private final String modelName;
+    private final int widthOfCar;
 
     private HashMap<String, Double> dictionary = new HashMap<>();
     private Point direction = new Point(0,1);
@@ -27,7 +28,7 @@ public abstract class Car implements Moveable {
         dictionary.put("y", 0.0);
     }
 
-    public int getwidthOfCar(){
+    public int getWidthOfCar(){
         return widthOfCar;
     }
 
@@ -57,19 +58,18 @@ public abstract class Car implements Moveable {
 	    this.color = clr;
     }
 
-    public String getmodelname(){
+    public String getModelName(){
         return modelName;
     }
 
     public void startEngine(){
-        if( this instanceof flakfunktionalitet){
-            flakfunktionalitet truck = (flakfunktionalitet) this;
-            if (truck.getangle()== 0){
+        if( this instanceof LoadFunctionality){
+            LoadFunctionality truck = (LoadFunctionality) this;
+            if (truck.getAngle()== 0){
                 currentSpeed = 0.1;
             }
         
-        }
-        else{
+        } else{
 	    currentSpeed = 0.1;
         }
     }
@@ -98,14 +98,7 @@ public abstract class Car implements Moveable {
 
     public void brake(double amount) {
         if (amount > 0 && amount < 1) {
-            if (this instanceof flakfunktionalitet) { 
-                flakfunktionalitet scania = (flakfunktionalitet) this;
-                if (scania.getangle() == 0) {
-                    decrementSpeed(amount);
-                }
-            } else {
                 decrementSpeed(amount);
-            }
         }
     }
 
@@ -114,7 +107,8 @@ public abstract class Car implements Moveable {
         double speed = getCurrentSpeed();
         double x = speed * direction.x;
         double y = speed * direction.y;
-        dictionary.put("y", dictionary.get("x") + x);
+
+        dictionary.put("x", dictionary.get("x") + x);
         dictionary.put("y", dictionary.get("y") + y);
 
     }
@@ -124,7 +118,7 @@ public abstract class Car implements Moveable {
         switch (direction.y) {
             case 1:
                 direction = new Point(-1,0);
-    
+                break;
             case 0:
                 if (direction.x == -1) {
                      direction = new Point(0,-1);
@@ -132,9 +126,9 @@ public abstract class Car implements Moveable {
                 } else if (direction.x == 1) {
                     direction = new Point(0,1);
                 }
+                break;
             case -1:
                 direction = new Point(1,0);
-                
              default:
                 break;
 
@@ -146,7 +140,7 @@ public abstract class Car implements Moveable {
         switch (direction.y) {
             case 1:
                 direction = new Point(1,0);
-    
+                break;
             case 0:
                 if (direction.x == -1) {
                      direction = new Point(0,1);
@@ -154,6 +148,7 @@ public abstract class Car implements Moveable {
                 } else if (direction.x == 1) {
                     direction = new Point(0,-1);
                 }
+                break;
             case -1:
                 direction = new Point(-1,0);
                 
