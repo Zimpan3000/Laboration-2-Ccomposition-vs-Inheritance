@@ -1,38 +1,34 @@
-
-package org.example;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Workshop<T extends Car>{
+public class Workshop<T extends Vehicle>{
 
     private int capacity;
+    private T model;
     private List<T> workshopList= new ArrayList<>(capacity);
-    private Class<T> type;
 
-    public Workshop(int capacity, Class<T> type){
+    public Workshop(int capacity, T model){
         this.capacity = capacity;
-        this.type = type;
+        this.model = model;
     }
 
-    public <S extends Car> void fixCar(S damagedCar){
-        if (!type.isInstance(damagedCar)) {
-            throw new IllegalArgumentException("This workshop only accepts " + type.getSimpleName() + " cars!");
-        }
-        if ( workshopList.size() < capacity) {
-            workshopList.add((T) damagedCar);
-        }
+    public void fixCar(T damagedVehicle){
+        if ( workshopList.size() < capacity && !damagedVehicle.getOutOfOrder()){
+        damagedVehicle.setOutOfOrderOn();
+        workshopList.add(damagedVehicle);
+    }
     } 
 
-    public T removeCar(T car) {
-        if (!workshopList.contains(car)) {
-            System.out.println("This car is not in the workshop");
-            return null;
-        }
-        workshopList.remove(car);
-        return car;
+    public T removeVehicle(T Vehicle) {
+        workshopList.remove(Vehicle);
+        Vehicle.setOutOfOrderOff();
+        return Vehicle;
 
     }
 
+    public T getmodelname() {
+        return this.model;
+    }
 
     public List<T> getWorkshopList() {
         return new ArrayList<>(workshopList); 
