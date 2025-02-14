@@ -21,7 +21,7 @@ public class TMF extends Truck{
             
             for (int i = 0 ; i < loadList.size(); i++ ){
                
-                if (loadList.get(i).getwidthOfCar() <= widthOfLorry && (this instanceof Truck)&& isCarClose(loadList.get(i))) {
+                if (loadList.get(i).getwidthOfCar() <= widthOfLorry && (this instanceof Truck)&& isCarClose(loadList.get(i)) && getCurrentSpeed()==0 && getTruckBedIsClosed()==false) {
                     if (!loadList.get(i).getOutOfOrder()) {
                         carlist.addFirst(loadList.get(i));
                         loadList.get(i).setOutOfOrderOn();
