@@ -118,7 +118,7 @@ public abstract class Vehicle implements Moveable {
         double speed = getCurrentSpeed();
         double x = speed * direction.x;
         double y = speed * direction.y;
-        dictionary.put("y", dictionary.get("x") + x);
+        dictionary.put("x", dictionary.get("x") + x);
         dictionary.put("y", dictionary.get("y") + y);
         } else {
             System.out.println("handbreak is on");
